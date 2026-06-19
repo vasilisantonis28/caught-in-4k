@@ -307,6 +307,104 @@
     text-transform:uppercase;
   }
 
+  /* ---------- SUSPECT FILES ---------- */
+  #suspects{
+    position:relative;
+    padding:40px 20px 110px;
+  }
+  .suspects-head{
+    text-align:center;
+    margin-bottom:60px;
+  }
+  .suspects-head h2{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(28px,6vw,46px);
+    letter-spacing:.02em;
+    color:var(--text-white);
+  }
+  .suspects-head h2 span{color:var(--accent-amber);}
+  .suspects-head p{
+    margin-top:10px;
+    font-size:12px;
+    letter-spacing:.18em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+  }
+
+  .suspects-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:30px;
+    max-width:1000px;
+    margin:0 auto;
+  }
+
+  .suspect-card{
+    opacity:0;
+    transform:translateY(40px);
+    transition:opacity .8s ease, transform .8s ease;
+    background:var(--bg-panel);
+    border:1px solid rgba(255,184,0,.18);
+  }
+  .suspect-card.in-view{opacity:1;transform:translateY(0);}
+
+  .suspect-photo{
+    width:100%;
+    aspect-ratio:1/1;
+    background:
+      repeating-linear-gradient(45deg, rgba(255,46,46,.14) 0 14px, rgba(0,0,0,.05) 14px 28px),
+      #161616;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:8px;
+    color:rgba(255,255,255,.45);
+    border-bottom:1px solid rgba(255,184,0,.18);
+    overflow:hidden;
+  }
+  .suspect-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .suspect-photo svg{opacity:.55;}
+  .suspect-photo .ph-label{font-size:10px;letter-spacing:.12em;}
+
+  .suspect-body{padding:18px 18px 22px;}
+
+  .suspect-file-no{
+    font-size:10px;
+    letter-spacing:.16em;
+    color:var(--accent-amber);
+    margin-bottom:8px;
+  }
+  .suspect-name{
+    font-family:'Anton',sans-serif;
+    font-size:22px;
+    letter-spacing:.01em;
+    color:var(--text-white);
+    line-height:1.15;
+  }
+  .suspect-alias{
+    font-size:11px;
+    font-style:italic;
+    color:var(--text-dim);
+    margin-top:4px;
+  }
+  .suspect-status{
+    display:inline-block;
+    margin-top:12px;
+    background:var(--accent-red);
+    color:#fff;
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.1em;
+    padding:4px 10px;
+  }
+  .suspect-blurb{
+    margin-top:14px;
+    font-size:12px;
+    line-height:1.6;
+    color:#cfcfc7;
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important;}
   }
@@ -352,6 +450,15 @@
     <div class="gallery-foot">No jury required. Case closed.</div>
   </div>
 
+  <!-- SUSPECT FILES -->
+  <div id="suspects">
+    <div class="suspects-head">
+      <h2>SUSPECT <span>FILES</span></h2>
+      <p>Persons of interest — open case</p>
+    </div>
+    <div class="suspects-grid" id="suspectsGrid"></div>
+  </div>
+
 <script>
   // ---------------------------------------------------------------
   // ΓΡΑΨΕ ΕΔΩ ΤΑ ΔΙΚΑ ΣΟΥ ΚΕΙΜΕΝΑΚΙΑ — ένα ανά φωτογραφία, με τη σειρά.
@@ -359,10 +466,63 @@
   // ό,τι κι αν κάνεις ΜΗΝ αγγίξεις το PHOTO_SOURCES παρακάτω (είναι οι εικόνες σε base64).
   // ---------------------------------------------------------------
   const CAPTIONS = [
-    "THE MAGOS",
-    "THE MESSENGER",
-    "THE KASKANIS",
-    "THE 6TH GEAR"
+    "THE BAIT",
+    "THE TIP-OFF",
+    "THE SCENE",
+    "THE CONFESSION"
+  ];
+
+  
+  const SUSPECTS = [
+    {
+      name: "Orestis",
+      alias: "AKA Tsimplou",
+      status: "WANTED",
+      blurb: "Ύποπτος για την συμμετοχη του στην δημιουργεια του site Βardos BurgerHouse  καθως και για τον αρχηγικο του  ρολο στην φαρσα με τα τηλεφωνα.",
+      src: ""
+    },
+    {
+      name: "Georgi",
+      alias: "AKA Magos ",
+      status: "WANTED",
+      blurb: "Αρχιγηκο ρολο στην δημιουργεια του site.",
+      src: ""
+    },
+    {
+      name: "Aggelos",
+      alias: "AKA 6η ταχυτητα",
+      status: "WANTED",
+      blurb: "Στοιχεια τον δειχνων να θελει να ανοιξει και δευτερο μαγαζι ο βαρδος .",
+      src: ""
+    },
+    {
+      name: "Filippos",
+      alias: "AKA su cef",
+      status: "WANTED",
+      blurb: "Υπευθυνος για την αλοιωση στοιχειων.",
+      src: ""
+    },
+    {
+      name: "Alexandros",
+      alias: "AKA linatsas",
+      status: "WANTED",
+      blurb: "Υπευθυνος για το marketing οπως αναφερει μεσα απο τα chat.",
+      src: ""
+    },
+    {
+      name: "Mixalis",
+      alias: "AKA pontikos",
+      status: "WANTED",
+      blurb: "Στοιχεια τον δειχνων να θελει να ανοιξει και δευτερο μαγαζι ο βαρδος.",
+      src: ""
+    },
+    {
+      name: "Thanos",
+      alias: "AKA pouros",
+      status: "WANTED",
+      blurb: "Ελαφρια σημμετοχη στην αξιολογηση του site Βαρδος Βιολαντα self service.",
+      src: ""
+    }
   ];
 
   // Οι ίδιες οι φωτογραφίες (μην το πειράξεις αυτό) ----------------
@@ -402,6 +562,32 @@
       `Exhibit log — ${PHOTOS.length} photo${PHOTOS.length === 1 ? '' : 's'} entered into evidence`;
   }
 
+  function buildSuspects(){
+    const grid = document.getElementById('suspectsGrid');
+    grid.innerHTML = '';
+    SUSPECTS.forEach((s, i) => {
+      const card = document.createElement('div');
+      card.className = 'suspect-card';
+      const fileNo = String(i + 1).padStart(2, '0');
+      card.innerHTML = `
+        <div class="suspect-photo">
+          ${s.src
+            ? `<img src="${s.src}" alt="${s.name || 'Suspect ' + fileNo}">`
+            : `${cameraIcon}<span class="ph-label">NO PHOTO ON FILE</span>`}
+        </div>
+        <div class="suspect-body">
+          <div class="suspect-file-no">FILE #${fileNo}</div>
+          <div class="suspect-name">${s.name || 'UNKNOWN'}</div>
+          ${s.alias ? `<div class="suspect-alias">${s.alias}</div>` : ''}
+          ${s.status ? `<div class="suspect-status">${s.status}</div>` : ''}
+          ${s.blurb ? `<div class="suspect-blurb">${s.blurb}</div>` : ''}
+        </div>
+      `;
+      grid.appendChild(card);
+      revealObserver.observe(card);
+    });
+  }
+
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting){
@@ -412,6 +598,7 @@
   }, { threshold: 0.15 });
 
   buildGallery();
+  buildSuspects();
 
   // ---------------- timestamp ----------------
   function tick(){
